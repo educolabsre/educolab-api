@@ -137,3 +137,31 @@ exports.postConfirmParticipation = (req, res) => {
       console.log(err);
     });
 };
+
+exports.postUnsubscribe = (req, res) => {
+  const id = req.body.id;
+
+  const message = `
+    <div style="padding:1.5rem 1.5rem;border:3px solid #e8e8e8;border-radius:7px;font-family: Georgia, serif;width:75%;margin:2rem auto auto auto">
+      <p style="margin-top:0">Prezado(a) estudante(a),<br /><br />Inscricão removida com sucesso. A partir de agora, você não receberá mais recomendações relacionadas a esse fórum.</p>
+      <p>Atenciosamente,</p>
+      <p>---</p>
+      <p><a href="https://drive.google.com/file/d/1lDDJDDrh2yinrDVg9dUE-ECqGkBuoKjD/view">EduColab - Sistema de Recomendação Educacional para Diagnosticar e Promover a Colaboração em AVAs</a> (<b>EduColab</b>)</p>
+      <p>Pesquisador: Antônio J. Moraes Neto (IFB, SEDF)</p>
+      <p>Orientadora: Prof.ª Dr.ª Márcia A. Fernandes (UFU/FACOM/PPGCO)</p>
+      <p>Coorientador: Prof. Dr. Tel Amiel (UnB/FE/PPGE)</p>
+      <p style="margin-bottom:0">Colaboradores: Gabriel J. C. Lima; Prof. Dr. Raimundo C. S. Vasconcelos (IFB); Prof. Dr. Newarney T. Costa (IF Goiano)</p>
+    </div>
+  `;
+
+  Student.updateOne({ id: id }, { $set: { hasConfirmed: false } })
+    .then((result) => {
+      res.send(message);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send(`Ocorreu um erro ao desinscrever a participação no fórum.`);
+      console.log(err);
+    });
+};

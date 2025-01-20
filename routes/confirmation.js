@@ -10,5 +10,6 @@ router.get("/confirm-registration/:id", confirmationController.getConfirmRegistr
 router.get("/confirm-participation/:id", confirmationController.getConfirmParticipation);
 router.post("/confirm-registration", confirmationController.postConfirmRegistration);
 router.post("/confirm-participation", confirmationController.postConfirmParticipation);
+router.post("/unsubscribe-participation", confirmationController.postUnsubscribe);
 
 module.exports = router;
